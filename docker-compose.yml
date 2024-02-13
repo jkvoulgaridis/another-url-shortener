@@ -1,0 +1,55 @@
+version: "3.9"
+
+volumes:
+  cache: {}
+
+services:
+  redis:
+    container_name: redis
+    image: redis:6.2-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - cache:/data
+
+  postgres:
+    image: postgres:14.5
+    restart: unless-stopped
+    container_name: postgres
+    env_file:
+      - .postgres
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    ports:
+      - "8082:8080"
+
+  goapi:
+    restart: unless-stopped
+    container_name: goapi
+    command: /url-short
+    env_file:
+      - ./backend/.env
+    build:
+      dockerfile: ./Dockerfile
+    ports:
+      - "8005:8005"
+    depends_on:
+      - postgres
+
+  client:
+    container_name: client
+    build:
+      dockerfile: ./Dockerfile-client
+    ports:
+      - "3000:3000"
+    entrypoint: /bin/sh
+    command: -c "npm start"
+    volumes:
+      - ./frontend-client:/app # Maps the current directory to /usr/src/app in the container
+  

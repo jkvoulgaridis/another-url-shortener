@@ -1,0 +1,67 @@
+form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block; /* This ensures that the label and its input field are on separate lines */
+  margin-bottom: 10px; /* Adds space between the label/input pairs */
+}
+
+input[type="text"] {
+  width: calc(100% - 16px); /* Adjusts width to account for padding */
+  padding: 8px;
+  margin-bottom: 20px; /* Adds space below the input field */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect the total width */
+}
+
+/* Submit button styling */
+input[type="submit"] {
+  display: block; /* Makes the button appear on its own line */
+  width: 100%; /* Full width of the form container */
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 10px;
+  margin-bottom: 20px; /* Adds space below the button */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Short URL display styling */
+.form-result {
+  display: block; /* Ensures the short URL section is on its own line */
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #e7f3fe;
+  border-left: 6px solid #2196F3;
+  color: #31708f;
+}
+
+/* Make the form responsive */
+@media (max-width: 600px) {
+  form {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+
+.short-url {
+  color: ##4CAF50; /* A shade of blue */
+  text-decoration: none; /* Removes the underline from links */
+}
+
+.short-url:hover {
+  color: #4CAF50; /* A slightly darker shade of blue for hover effect */
+}

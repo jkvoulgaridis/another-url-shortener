@@ -1,0 +1,5 @@
+.cache
+.DS_STORE
+.idea
+frontend-client/node_modules
+frontend-client/public

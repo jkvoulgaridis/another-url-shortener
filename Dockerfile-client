@@ -1,0 +1,8 @@
+FROM node:18-alpine
+WORKDIR /app
+
+COPY ./frontend-client/public/ /app/public
+COPY ./frontend-client/src/ /app/src
+COPY ./frontend-client/package.json /app/package.json
+
+RUN npm install
