@@ -9,6 +9,8 @@ import (
     "github.com/gin-contrib/cors"
     "fmt"
     "time"
+    // "github.com/prometheus/client_golang/prometheus"
+    "github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 
@@ -48,6 +50,15 @@ func Home(c *gin.Context){
 	c.IndentedJSON(http.StatusOK, "Welcome to best URL shortener :)")
 }
 
+
+func prometheusHandler() gin.HandlerFunc {
+    h := promhttp.Handler()
+
+    return func(c *gin.Context) {
+        h.ServeHTTP(c.Writer, c.Request)
+    }
+}
+
 func main() {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
@@ -61,9 +72,11 @@ func main() {
  	db, err := postgres.GetDbConnection()
  	if err != nil{
  		panic("failed to start db")
+ 	} else {
+ 		fmt.Println("Initializing DB, running migrations...")
+	 	postgres.RunMigrations(db)
+	 	postgres.CreateSamplesInDB(db)
  	}
- 	postgres.RunMigrations(db)
- 	postgres.CreateSamplesInDB(db)
 
 	fmt.Printf("Hello from API :)\n")
 	host := settings.GetEnvVar("HOST")
@@ -74,5 +87,6 @@ func main() {
 	router.POST("/create-mapping/", CreateMapping)
 	router.GET("/get-mapping/:key" , GetMapping)
 	router.GET("go-to-mapping/:key", GoToMapping)
+	router.GET("/metrics", prometheusHandler())
     router.Run(fmt.Sprintf("%s:%s", host, port))
 }
