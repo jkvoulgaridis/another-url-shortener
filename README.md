@@ -11,6 +11,11 @@ This is implements a functional url shortener.
 * Docker and Docker compose are used to pack the stack and easily use it. 
 
 
+# Getting Started
+
+1. ```make build```
+2. ```make up```
+3. Navigate to localhost:3000 and start shorten urls.
 
 # Disclaimer 
 * The UI is pretty poor
